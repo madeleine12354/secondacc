@@ -1,4 +1,4 @@
-name: Run every 2 hours  # мой главный акк
+name: Run every 2 hours
 
 on:
   schedule:
@@ -11,27 +11,35 @@ on:
 jobs:
   run-script:
     runs-on: ubuntu-latest
+    timeout-minutes: 30
     env:
       MAIN_TOKEN: ${{ secrets.MAIN_TOKEN }}
       BOT_TOKEN: ${{ secrets.BOT_TOKEN }}
     steps:
-      - uses: actions/checkout@v4
-      - name: Set up Python
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Show files (debug)
+        run: |
+          pwd
+          ls -R
+
+      - name: Setup Python
         uses: actions/setup-python@v4
         with:
           python-version: '3.11'
+
       - name: Install dependencies
         run: |
-          if [ -f main-acc-main/akk-N-main/maddd-main/requirements.txt ]; then pip install -r main-acc-main/akk-N-main/maddd-main/requirements.txt; else pip install requests loguru python-dotenv; fi
-      - name: Ensure secrets
+          pip install requests loguru python-dotenv
+
+      - name: Check secrets
         run: |
-          if [ -z "$MAIN_TOKEN" ] || [ -z "$BOT_TOKEN" ]; then echo "Missing MAIN_TOKEN or BOT_TOKEN" >&2; exit 1; fi
-      - name: Show repo tree (debug)
+          if [ -z "$MAIN_TOKEN" ] || [ -z "$BOT_TOKEN" ]; then
+            echo "Missing MAIN_TOKEN or BOT_TOKEN"
+            exit 1
+          fi
+
+      - name: Run script
         run: |
-          echo "PWD: $(pwd)"
-          ls -la
-          echo "Top-level dirs:"
-          find . -maxdepth 3 -type d -print
-      - name: Run script (explicit path)
-        run: |
-          if [ -f main-acc-main/akk-N-main/maddd-main/FarmWinsAlmaz-durakonline-main/main.py ]; then python main-acc-main/akk-N-main/maddd-main/FarmWinsAlmaz-durakonline-main/main.py; else echo "File not found: main-acc-main/akk-N-main/maddd-main/FarmWinsAlmaz-durakonline-main/main.py" >&2; ls -la main-acc-main/akk-N-main/maddd-main/FarmWinsAlmaz-durakonline-main/; exit 1; fi
+          python main-acc-main/akk-N-main/maddd-main/FarmWinsAlmaz-durakonline-main/main.py
