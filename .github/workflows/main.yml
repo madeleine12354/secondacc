@@ -40,7 +40,16 @@ jobs:
             exit 1
           fi
 
-      - name: Run script
-        working-directory: main-acc-main
+      - name: Run script (dynamic path)
         run: |
-          python akk-N-main/maddd-main/FarmWinsAlmaz-durakonline-main/main.py
+          echo "Current working dir: $(pwd)"
+          echo "Looking for main.py..."
+          find . -type f -path '*FarmWinsAlmaz-durakonline-main/main.py' -print
+          MAIN_PY=$(find . -type f -path '*FarmWinsAlmaz-durakonline-main/main.py' | head -n 1)
+          if [ -z "$MAIN_PY" ]; then
+            echo "main.py not found"
+            find . -maxdepth 6 -type f -name 'main.py' -print
+            exit 1
+          fi
+          echo "Executing $MAIN_PY"
+          python "$MAIN_PY"
