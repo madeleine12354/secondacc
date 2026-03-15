@@ -41,5 +41,6 @@ jobs:
           fi
 
       - name: Run script
+        working-directory: main-acc-main
         run: |
-          python main-acc-main/akk-N-main/maddd-main/FarmWinsAlmaz-durakonline-main/main.py
+          python akk-N-main/maddd-main/FarmWinsAlmaz-durakonline-main/main.py
