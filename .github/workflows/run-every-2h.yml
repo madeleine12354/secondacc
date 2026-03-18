@@ -22,7 +22,7 @@ jobs:
           python-version: '3.11'
       - name: Install dependencies
         run: |
-          pip install -r FarmWinsAlmaz-durakonline-main/requirements.txt
+          pip install -r requirements.txt
       - name: Ensure secrets
         run: |
           if [ -z "$MAIN_TOKEN" ] || [ -z "$BOT_TOKEN" ]; then echo "Missing MAIN_TOKEN or BOT_TOKEN" >&2; exit 1; fi
