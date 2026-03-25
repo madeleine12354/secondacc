@@ -14,7 +14,7 @@ COUNT: int = 20
 
 DEBUG_MODE: bool = False
 SERVERS: [] = [
-    "u1"
+    "u2"
 ]
 
 class Almaz:
