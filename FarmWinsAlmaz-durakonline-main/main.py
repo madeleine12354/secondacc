@@ -29,8 +29,8 @@ class Almaz:
     def start_game(self, main, bot, server_id: str, count: int = 1000):
         self.games += 1
         self.log("Create 1 thread", f"{server_id}")
-        game = bot.game.create(100, "1", 2, 52)
-        main.game.join("1", game.id)
+        game = bot.game.create(100, "1391", 2, 52)
+        main.game.join("1391", game.id)
         main._get_data("game")
         for i in range(count):
             self.log(f"{i+1} game", f"{server_id}")
